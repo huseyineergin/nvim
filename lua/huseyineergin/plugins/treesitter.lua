@@ -10,7 +10,6 @@ return {
 			sync_install = false,
 			indent = { enable = true },
 			highlight = { enable = true },
-			ensure_installed = { "c", "go", "lua", "vim", "vimdoc" },
 		})
 	end,
 }
