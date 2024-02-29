@@ -24,20 +24,20 @@ vim.keymap.set("n", "<C-Down>", "<cmd>resize -1<CR>") -- decrease size horizonta
 vim.keymap.set("n", "<C-Left>", "<cmd>vert resize -1<CR>") -- decrease size vertically
 vim.keymap.set("n", "<C-Right>", "<cmd>vert resize +1<CR>") -- increase size vertically
 
+-- delete without saving the value
+vim.keymap.set("v", "<leader>d", [["_d]])
+
 -- move the highlighted part
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv") -- prev
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv") -- next
-
--- delete without saving the value
-vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
 
 -- copy to system clipboard
 vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
 vim.keymap.set("n", "<leader>Y", [["+Y]]) -- entire line
 
 -- paste from system clipboard
-vim.keymap.set({ "n", "v" }, "<leader>p", [["+p]])
-vim.keymap.set("v", "<leader>P", [["+P]]) -- dont lose the value
+vim.keymap.set("v", "<leader>P", [["+P]]) -- before cursor
+vim.keymap.set({ "n", "v" }, "<leader>p", [["+p]]) -- after cursor
 
 -- open markdown preview
 vim.keymap.set("n", "<leader>md", "<cmd>MarkdownPreview<CR>")
