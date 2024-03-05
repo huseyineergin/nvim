@@ -36,8 +36,8 @@ vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
 vim.keymap.set("n", "<leader>Y", [["+Y]]) -- entire line
 
 -- paste from system clipboard
-vim.keymap.set("v", "<leader>P", [["+P]]) -- before cursor
-vim.keymap.set({ "n", "v" }, "<leader>p", [["+p]]) -- after cursor
+vim.keymap.set({ "n", "v" }, "<leader>p", [["+p]])
+vim.keymap.set({ "n", "v" }, "<leader>P", [["+P]]) -- without yanking the deleted value
 
 -- open markdown preview
 vim.keymap.set("n", "<leader>md", "<cmd>MarkdownPreview<CR>")
