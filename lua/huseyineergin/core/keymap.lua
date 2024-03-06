@@ -2,6 +2,9 @@ vim.g.mapleader = " "
 
 vim.keymap.set("n", "<leader>ex", vim.cmd.Ex)
 
+-- redo
+vim.keymap.set("n", "U", "<C-r>")
+
 -- append below line to current
 vim.keymap.set("n", "J", "mzJ`z")
 
