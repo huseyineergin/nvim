@@ -1,23 +1,5 @@
 return {
 	{
-		"VonHeikemen/lsp-zero.nvim",
-		branch = "v3.x",
-		config = function()
-			local lsp_zero = require("lsp-zero")
-			lsp_zero.set_sign_icons({
-				error = "",
-				warn = "",
-				hint = "󰠠",
-				info = "",
-			})
-		end,
-		lazy = true,
-		init = function()
-			vim.g.lsp_zero_extend_cmp = 0
-			vim.g.lsp_zero_extend_lspconfig = 0
-		end,
-	},
-	{
 		"williamboman/mason.nvim",
 		config = function()
 			require("mason").setup({
@@ -28,47 +10,6 @@ return {
 						package_uninstalled = "✗",
 					},
 				},
-			})
-		end,
-		lazy = false,
-	},
-	{
-		"hrsh7th/nvim-cmp",
-		event = "InsertEnter",
-		dependencies = {
-			"L3MON4D3/LuaSnip",
-			"hrsh7th/cmp-path",
-			"hrsh7th/cmp-buffer",
-			"saadparwaiz1/cmp_luasnip",
-			"rafamadriz/friendly-snippets",
-		},
-		config = function()
-			local cmp = require("cmp")
-			local lsp_zero = require("lsp-zero")
-
-			lsp_zero.extend_cmp()
-
-			require("luasnip.loaders.from_vscode").lazy_load()
-
-			cmp.setup({
-				sources = {
-					{ name = "nvim_lsp" },
-					{ name = "luasnip" },
-					{ name = "buffer" },
-					{ name = "path" },
-				},
-				formatting = require("lsp-zero").cmp_format(),
-				window = {
-					completion = cmp.config.window.bordered(),
-					documentation = cmp.config.window.bordered(),
-				},
-				mapping = cmp.mapping.preset.insert({
-					["<C-e>"] = cmp.mapping.abort(),
-					["<C-Space>"] = cmp.mapping.complete(),
-					["<C-p>"] = cmp.mapping.select_prev_item(),
-					["<C-n>"] = cmp.mapping.select_next_item(),
-					["<CR>"] = cmp.mapping.confirm({ select = true }),
-				}),
 			})
 		end,
 	},
@@ -88,34 +29,82 @@ return {
 			"williamboman/mason-lspconfig.nvim",
 		},
 		config = function()
-			local lsp_zero = require("lsp-zero")
-			lsp_zero.extend_lspconfig()
+			local lspconfig = require("lspconfig")
+			local lsp_defaults = lspconfig.util.default_config
+			local cmp_capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-			lsp_zero.on_attach(function(_, bufnr)
-				local opts = { buffer = bufnr, remap = false }
+			lsp_defaults.capabilities = vim.tbl_deep_extend("force", lsp_defaults.capabilities, cmp_capabilities)
 
-				vim.keymap.set("n", "K", function()
-					vim.lsp.buf.hover()
-				end, opts)
-				vim.keymap.set("n", "gd", function()
-					vim.lsp.buf.definition()
-				end, opts)
-				vim.keymap.set("n", "<leader>ca", function()
-					vim.lsp.buf.code_action()
-				end, opts)
-			end)
+			vim.api.nvim_create_autocmd("LspAttach", {
+				callback = function(event)
+					local opts = { noremap = true, buffer = event.bufnr }
+
+					vim.keymap.set("n", "K", function()
+						vim.lsp.buf.hover()
+					end, opts)
+					vim.keymap.set("n", "gd", function()
+						vim.lsp.buf.definition()
+					end, opts)
+					vim.keymap.set("n", "<leader>ca", function()
+						vim.lsp.buf.code_action()
+					end, opts)
+				end,
+			})
 
 			require("mason-lspconfig").setup({
 				ensure_installed = {
 					"lua_ls",
 				},
-				handlers = {
-					lsp_zero.default_setup,
-					lua_ls = function()
-						local lua_opts = lsp_zero.nvim_lua_ls()
-						require("lspconfig").lua_ls.setup(lua_opts)
+				automatic_installation = true,
+			})
+
+			lspconfig.bashls.setup({})
+			lspconfig.clangd.setup({})
+			lspconfig.vimls.setup({})
+			lspconfig.lua_ls.setup({
+				settings = {
+					Lua = {
+						diagnostics = { globals = { "vim" } },
+					},
+				},
+			})
+		end,
+	},
+	{
+		"hrsh7th/nvim-cmp",
+		event = "InsertEnter",
+		dependencies = {
+			"L3MON4D3/LuaSnip",
+			"hrsh7th/cmp-path",
+			"hrsh7th/cmp-buffer",
+			"saadparwaiz1/cmp_luasnip",
+		},
+		config = function()
+			local cmp = require("cmp")
+
+			cmp.setup({
+				sources = cmp.config.sources({
+					{ name = "nvim_lsp" },
+					{ name = "luasnip" },
+					{ name = "buffer" },
+					{ name = "path" },
+				}),
+				snippet = {
+					expand = function(args)
+						require("luasnip").lsp_expand(args.body)
 					end,
 				},
+				window = {
+					completion = cmp.config.window.bordered(),
+					documentation = cmp.config.window.bordered(),
+				},
+				mapping = cmp.mapping.preset.insert({
+					["<C-e>"] = cmp.mapping.abort(),
+					["<C-Space>"] = cmp.mapping.complete(),
+					["<C-p>"] = cmp.mapping.select_prev_item(),
+					["<C-n>"] = cmp.mapping.select_next_item(),
+					["<CR>"] = cmp.mapping.confirm({ select = true }),
+				}),
 			})
 		end,
 	},
