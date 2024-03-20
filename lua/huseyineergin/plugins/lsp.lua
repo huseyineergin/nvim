@@ -26,7 +26,6 @@ return {
 		},
 		dependencies = {
 			"hrsh7th/cmp-nvim-lsp",
-			"williamboman/mason-lspconfig.nvim",
 		},
 		config = function()
 			local lspconfig = require("lspconfig")
@@ -49,13 +48,6 @@ return {
 						vim.lsp.buf.code_action()
 					end, opts)
 				end,
-			})
-
-			require("mason-lspconfig").setup({
-				ensure_installed = {
-					"lua_ls",
-				},
-				automatic_installation = true,
 			})
 
 			lspconfig.bashls.setup({})
