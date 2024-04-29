@@ -22,6 +22,14 @@ return {
 				layout_config = {
 					preview_width = 0.5,
 				},
+				file_ignore_patterns = {
+					"%.git/",
+				},
+			},
+			pickers = {
+				find_files = {
+					hidden = true,
+				},
 			},
 			extensions = {
 				["ui-select"] = {
