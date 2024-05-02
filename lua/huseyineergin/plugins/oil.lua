@@ -5,6 +5,7 @@ return {
 		require("oil").setup({
 			use_default_keymaps = false,
 			keymaps = {
+				["gr"] = "actions.refresh",
 				["<CR>"] = "actions.select",
 				["g?"] = "actions.show_help",
 				["gs"] = "actions.change_sort",
