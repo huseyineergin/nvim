@@ -47,6 +47,9 @@ return {
 					vim.keymap.set("n", "<leader>ca", function()
 						vim.lsp.buf.code_action()
 					end, opts)
+					vim.keymap.set("n", "<leader>vr", function()
+						vim.lsp.buf.references()
+					end, opts)
 				end,
 			})
 
