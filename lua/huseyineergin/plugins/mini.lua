@@ -2,7 +2,7 @@ return {
 	{
 		"echasnovski/mini.cursorword",
 		event = { "BufReadPre", "BufNewFile" },
-		version = false,
+		version = "*",
 		config = true,
 	},
 	{
