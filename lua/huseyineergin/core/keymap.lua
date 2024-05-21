@@ -41,8 +41,8 @@ vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
 vim.keymap.set("n", "<leader>Y", [["+Y]]) -- entire line
 
 -- paste from system clipboard
-vim.keymap.set({ "n", "v" }, "<leader>p", [["+p]])
-vim.keymap.set({ "n", "v" }, "<leader>P", [["+P]]) -- without yanking the deleted value
+vim.keymap.set({ "n", "v" }, "<leader>p", [["+p]]) -- after the cursor
+vim.keymap.set({ "n", "v" }, "<leader>P", [["+P]]) -- before the cursor
 
 -- replace the word that cursor is currently on
 vim.keymap.set("n", "<leader>rw", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
