@@ -44,8 +44,5 @@ vim.keymap.set("n", "<leader>Y", [["+Y]]) -- entire line
 vim.keymap.set({ "n", "v" }, "<leader>p", [["+p]])
 vim.keymap.set({ "n", "v" }, "<leader>P", [["+P]]) -- without yanking the deleted value
 
--- open markdown preview
-vim.keymap.set("n", "<leader>md", "<cmd>MarkdownPreview<CR>")
-
 -- replace the word that cursor is currently on
 vim.keymap.set("n", "<leader>rw", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
