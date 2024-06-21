@@ -53,6 +53,8 @@ return {
 				end,
 			})
 
+			lspconfig.tsserver.setup({})
+			lspconfig.pyright.setup({})
 			lspconfig.bashls.setup({})
 			lspconfig.clangd.setup({})
 			lspconfig.vimls.setup({})
