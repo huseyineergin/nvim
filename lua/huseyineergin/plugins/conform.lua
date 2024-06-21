@@ -7,10 +7,12 @@ return {
 		conform.setup({
 			formatters_by_ft = {
 				lua = { "stylua" },
+				python = { "black" },
 				html = { "prettier" },
 				json = { "prettier" },
 				yaml = { "prettier" },
 				markdown = { "prettier" },
+				javascript = { "prettier" },
 				go = { "goimports", "gofmt" },
 			},
 			format_on_save = {
